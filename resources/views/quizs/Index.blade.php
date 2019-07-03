@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <h1>Liste des catégories</h1>
+        <h1>Liste des quiz</h1>
    
         @if(session()->get('success'))
             <div class="alert alert-success">
@@ -9,7 +9,7 @@
             </div><br />
         @endif
 
-        <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">Créer</a>
+        <a href="{{ route('quizs.create') }}" class="btn btn-sm btn-primary">Créer</a>
        
         
         <table class="table table-striped">
@@ -22,15 +22,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($categories as $categorie)
+                @foreach($quizs as $quiz)
                 <tr>
-                    <td>{{$categorie->id}}</td>
-                    <td>{{$categorie->name}}</td>
-                    <td>{{$categorie->description}}</td>
+                    <td>{{$quiz->id}}</td>
+                    <td>{{$quiz->libelle}}</td>
+                    <td>{{$quiz->description}}</td>
                     <td>
-                        <a href="{{ route('categories.edit',$categorie->id)}}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route('quizs.edit',$quiz->id)}}" class="btn btn-sm btn-primary">Edit</a>
                   
-                        <form action="{{ route('categories.destroy', $categorie->id)}}" method="post">
+                        <form action="{{ route('quizs.destroy', $quiz->id)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" type="submit">Delete</button>
