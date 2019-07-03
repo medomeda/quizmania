@@ -15,13 +15,13 @@ class CreateQuestionOptionsTable extends Migration
     {
         Schema::create('question_options', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('libelle');
-            $table->unsignedInteger('quiz_id');
-            $table->unsignedInteger('question_id');
+             $table->string('libelle');
+           
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
+
             $table->boolean('estcorrecte')->default(false);
             $table->timestamps();
-
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');;
         });
     }
 

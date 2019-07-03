@@ -17,13 +17,16 @@ class CreateQuestionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('intitule', 150);
             $table->integer('reponse')->nullable()->default(0);
-            $table->integer('quiz_id');
+            
+            $table->unsignedInteger('quiz_id');
+            $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('cascade');
+            
+            $table->unsignedInteger('categorie_id');
+             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
+            
             $table->integer('points')->nullable()->default(12);
             $table->string('media')->nullable();
             $table->timestamps();
-
-
-            $table->foreign('quiz_id')->references('id')->on('quizs');
         });
     }
 
