@@ -37,10 +37,10 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
        $request->validate([
-        'name'=>'required',
+        'libelle'=>'required',
       ]);
       $categories = new Categorie([
-        'name' => $request->get('name'),
+        'libelle' => $request->get('libelle'),
         'description'=> $request->get('description'),
       ]);
       $categories->save();
@@ -85,7 +85,7 @@ class CategorieController extends Controller
         ]);
      
         $categorie = Categorie::find($id);
-        $categorie->name = $request->get('name');
+        $categorie->libelle = $request->get('libelle');
         $categorie->description = $request->get('description');
         $categorie->save();
 

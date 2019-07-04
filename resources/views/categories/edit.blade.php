@@ -19,8 +19,8 @@
                 @method('PATCH')
                 @csrf
                 <div class="form-group">
-                <label for="name">Libellé:</label>
-                <input type="text" class="form-control" name="name" value="{{ $categorie->name }}" />
+                <label for="libelle">Libellé:</label>
+                <input type="text" class="form-control" name="libelle" value="{{ $categorie->libelle }}" />
                 </div>
                 <div class="form-group">
                 <label for="description">Description :</label>

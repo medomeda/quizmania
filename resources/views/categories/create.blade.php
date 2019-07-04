@@ -18,8 +18,8 @@
                 <form method="post" action="{{ route('categories.store') }}">
                     <div class="form-group">
                         @csrf
-                        <label for="name">Libellé:</label>
-                        <input type="text" class="form-control" name="name"/>
+                        <label for="libelle">Libellé:</label>
+                        <input type="text" class="form-control" name="libelle"/>
                     </div>
                     <div class="form-group">
                         <label for="description">Description :</label>
