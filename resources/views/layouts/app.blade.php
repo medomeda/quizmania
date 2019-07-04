@@ -37,7 +37,10 @@
                             <a class="nav-link" href="{{ route('categories.index') }}">{{ __('Catégories') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('quizs.index') }}">{{ __('Quiz') }}</a>
+                            <a class="nav-link" href="{{ route('quizs.index') }}">{{ __('Quizs') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('questions.index') }}">{{ __('Questions') }}</a>
                         </li>
                     </ul>
 
@@ -81,5 +84,6 @@
             @yield('content')
         </main>
     </div>
+    @yield('script')
 </body>
 </html>

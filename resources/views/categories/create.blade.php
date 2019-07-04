@@ -3,7 +3,7 @@
     <div class="container">
         <div class="card uper">
             <div class="card-header">
-                Add Catégorie
+                Add Quiz
             </div>
             <div class="card-body">
                 @if ($errors->any())

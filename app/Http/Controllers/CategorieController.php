@@ -36,7 +36,7 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-       $request->validate([
+      $request->validate([
         'libelle'=>'required',
       ]);
       $categories = new Categorie([
@@ -66,9 +66,9 @@ class CategorieController extends Controller
      */
     public function edit($id)
     {
-       $categorie = Categorie::find($id);
+      $categorie = Categorie::find($id);
 
-        return view('categories.edit', compact('categorie'));
+      return view('categories.edit', compact('categorie'));
     }
 
     /**
@@ -89,7 +89,7 @@ class CategorieController extends Controller
         $categorie->description = $request->get('description');
         $categorie->save();
 
-      return redirect()->route('categories.index')->with('success', 'Stock has been updated');
+        return redirect()->route('categories.index')->with('success', 'Stock has been updated');
     }
 
     /**

@@ -9,7 +9,7 @@
             </div><br />
         @endif
 
-        <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">Créer</a>
+        <a href="{{ route('questions.create') }}" class="btn btn-sm btn-primary">Créer</a>
        
         
         <table class="table table-striped">
@@ -17,20 +17,22 @@
                 <tr>
                     <td>ID</td>
                     <td>Libellé</td>
-                    <td>Description</td>
+                    <td>Quiz</td>
+                    <td>Catégorie</td>
                     <td>Action</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach($categories as $categorie)
+                @foreach($questions as $question)
                 <tr>
-                    <td>{{$categorie->id}}</td>
-                    <td>{{$categorie->libelle}}</td>
-                    <td>{{$categorie->description}}</td>
+                    <td>{{$question->id}}</td>
+                    <td>{{$question->intitule}}</td>
+                    <td>{{$question->quiz_id}}</td>
+                    <td>{{$question->categorie_id}}</td>
                     <td>
-                        <a href="{{ route('categories.edit',$categorie->id)}}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route('questions.edit',$question->id)}}" class="btn btn-sm btn-primary">Edit</a>
                   
-                        <form action="{{ route('categories.destroy', $categorie->id)}}" method="post">
+                        <form action="{{ route('questions.destroy', $question->id)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" type="submit">Delete</button>
