@@ -44,7 +44,6 @@
 
                     <div class="card">
                         <div class="card-header">
-                            Reponses
                             <input type="button" class="btn btn-sm btn-primary addrow" value="Ajouter une reponse"/>
                         </div>
                         <div class="card-body">
@@ -61,8 +60,7 @@
                                 <tbody></tbody>
                             </table>
                         </div>
-                    </div>    
-   
+                    </div>     
                     <button type="submit" class="btn btn-primary">Add</button>
                 </form>
             </div>
@@ -78,10 +76,10 @@
             var rowCount = $('#tblreponseList tbody tr').length;
             rowCount++;
             var html  = '<tr>';
-                html += '<td><input type="text" name="id[]" id="id' + rowCount + '" value="' + rowCount + '" class="form-control" /></td>';
-                html += '<td><input type="text" name="qty[]" id="ingQTY' + rowCount + '" value="" class="form-control" /></td>';
-                html += '<td><input type="check" name="chkvrai[]" id="chkvrai' + rowCount + '" value="0" class="form-control" /></td>';
-                html += '<td><input type="button" name="btndel[]" id="btndel' + rowCount + '" value="supprimer" class="btn btn-sm btn-danger delrow" /></td>';
+                html += '<td><input type="text" name="reponse_id[]" id="reponse_id' + rowCount + '" value="' + rowCount + '" class="form-control" /></td>';
+                html += '<td><input type="text" name="libelle[]" id="libelle_' + rowCount + '" value="" class="form-control" /></td>';
+                html += '<td><input type="check" name="correcte[]" id="correcte_' + rowCount + '" value="0" class="form-control" /></td>';
+                html += '<td><input type="button" name="delrow[]" id="delrow_' + rowCount + '" value="supprimer" class="btn btn-sm btn-danger delrow" /></td>';
                 html += '</tr>'
 
             $('#tblreponseList tbody').append(html);
@@ -94,30 +92,44 @@
 
         });
 
-        $('#frmquestion').on('submit', function(e){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+        $('#frmquestion1').on('submit', function(e){
             e.preventDefault(e);
+            
+            var frm = $(this);
+        
+            var reponseItems = [];
+             $('#tblreponseList tbody tr').each(function () {
+                reponseItems.push({
+                    id: $(this).find('input[name*="id"]').val(),
+                    question_id: $(this).find('input[name*="question_id"]').val(),
+                    libelle: $(this).find('input[name*="libelle"]').val(),
+                    correcte: $(this).find('input[name*="estcorrecte"]').val(),
+                });
+
+            });
+
+            var dataInfo = {
+                intitule: $('#intitule').val(),
+                reponse: $('#reponse').val(),
+                quiz_id: $('#quiz_id option:selected').val(),
+                categorie_id: $('#categorie_id option:selected').val(),
+                points: $('#points').val(),
+                options : reponseItems
+            }
 
             $.ajax({
-                type:"PUT",
-                url:"{{ url('/questions/store') }}" ,
-                data:{ test:1, b:5 },
+                type: frm.attr('method'),
+                url:frm.attr('action') ,
+                data: dataInfo,
                 success: function(data){
                     console.log(data);
                 },
                 error: function(data){
 
                 }
-            })
+            });
+
     });
-
-
-    
-  
 
     </script>   
 @endsection

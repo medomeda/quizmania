@@ -30,7 +30,7 @@
                     <td>{{$question->quiz_id}}</td>
                     <td>{{$question->categorie_id}}</td>
                     <td>
-                        <a href="{{ route('questions.edit',$question->id)}}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route('questions.edit', $question->id)}}" class="btn btn-sm btn-primary">Edit</a>
                   
                         <form action="{{ route('questions.destroy', $question->id)}}" method="post">
                             @csrf

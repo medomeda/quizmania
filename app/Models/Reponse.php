@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Question;
 
 class Reponse extends Model
 {
@@ -12,6 +13,11 @@ class Reponse extends Model
         'quiz_id',
         'correcte'
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 
     
 }

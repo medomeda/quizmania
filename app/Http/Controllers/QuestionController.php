@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\Categorie;
 use App\Models\Quiz;
+use App\Models\Reponse;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -15,7 +16,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::with('reponses');
+        $questions = Question::with('reponses')->get();
         return View('questions.index', compact('questions'));
     }
 
@@ -39,18 +40,16 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        //dd($request);
 
         $request->validate([
             'intitule'=>'required',
             'reponse'=>'required',
             'quiz_id'=>'required',
-            'categorie_id'=>'required',
-            'points'=>'required',
+            'categorie_id'=>'required'
         ]);
 
         $question = new Question();
-       
         $question->intitule = $request->get('intitule');
         $question->reponse = $request->get('reponse');
         $question->quiz_id = $request->get('quiz_id');
@@ -58,15 +57,15 @@ class QuestionController extends Controller
         $question->points = $request->get('points');
         $question->media = $request->get('media');
         $question->save();
-
-        // Go through all qty (that are related to the details, and create them)
-        foreach ($postValues['qty'] as $qty) {
-            $question->reponses()->create([ 
-                'question_id' => $order->id,
-                'quiz_id' => $question->quiz_id,
-                'libelle' => $qty,
-                'correcte' => $qty,
-            ]);
+        
+        //$question_id = DB::getPdo()->lastInsertId();
+        $count = count($request->get('reponse_id'));    
+        for($i = 0; $i < $count; ++$i){
+            $reponse = new Reponse();
+            $reponse->question_id = $question->id;
+            $reponse->libelle = $request->libelle[$i];
+            $reponse->correcte = $request->correcte[$i];
+            $reponse->save();
         }
    
         return redirect()->route('questions.index')->with('success', 'Stock has been added');
@@ -91,8 +90,10 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        $question = Categorie::find($id);
-        return view('questions.edit', compact('question'));
+        $question = Question::with('reponses')->find($id);
+        $quizs = Quiz::all(['libelle','id']);
+        $categories = Categorie::all(['libelle','id']);
+        return view('questions.edit', compact('question','categories','quizs'));
     }
 
     /**
@@ -108,8 +109,7 @@ class QuestionController extends Controller
             'intitule'=>'required',
             'reponse'=>'required',
             'quiz_id'=>'required',
-            'categorie_id'=>'required',
-            'points'=>'required',
+            'categorie_id'=>'required'
         ]);
 
         $question = Question::find($id);
@@ -120,6 +120,19 @@ class QuestionController extends Controller
         $question->points = $request->get('points');
         $question->media = $request->get('media');
         $question->save();
+
+        $count = count($request->get('reponse_id'));    
+        
+        $question->reponses()->delete();
+
+        for($i = 0; $i < $count; ++$i){
+            $reponse = new Reponse();
+            $reponse->quiz_id = $question->quiz_id;
+            $reponse->question_id = $question->id;
+            $reponse->libelle = $request->libelle[$i];
+            $reponse->correcte = $request->correcte[$i];
+            $reponse->save();
+        }
 
         return redirect()->route('questions.index')->with('success', 'Stock has been updated');
 
