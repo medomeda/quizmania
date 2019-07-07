@@ -37,7 +37,8 @@ class QuizController extends Controller
     public function store(Request $request)
     {
        $request->validate([
-        'libelle'=>'required',
+           'libelle'=>'required',
+           'description' => 'required'
       ]);
       $quizs = new Quiz([
         'libelle' => $request->get('libelle'),
@@ -82,6 +83,7 @@ class QuizController extends Controller
     {
         $request->validate([
             'libelle'=>'required',
+            'description' => 'required'
         ]);
      
         $quiz = Quiz::find($id);

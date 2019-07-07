@@ -14,20 +14,20 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('intitule', 150);
             $table->integer('reponse')->nullable()->default(0);
-            
-            $table->unsignedInteger('quize_id');
-            $table->foreign('quize_id')->references('id')->on('quizes')->onDelete('cascade');
-            
-            $table->unsignedInteger('categorie_id');
-             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
-            
-            $table->integer('points')->nullable()->default(12);
+            $table->integer('quize_id')->unsigned();
+            $table->integer('categorie_id')->unsigned();
+            $table->integer('points')->nullable()->default(0);
             $table->string('media')->nullable();
             $table->timestamps();
+
+            $table->foreign('quize_id')->references('id')->on('quizes')->onDelete('cascade');
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
         });
+
+
     }
 
     /**

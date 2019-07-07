@@ -37,8 +37,9 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'libelle'=>'required',
+        'libelle'=>'required|max:150',
       ]);
+
       $categories = new Categorie([
         'libelle' => $request->get('libelle'),
         'description'=> $request->get('description'),
@@ -81,7 +82,7 @@ class CategorieController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required',
+            'libelle'=>'required|max:150',
         ]);
      
         $categorie = Categorie::find($id);

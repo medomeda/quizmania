@@ -32,7 +32,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                    @auth
+                        <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories.index') }}">{{ __('Catégories') }}</a>
                         </li>
@@ -43,6 +44,7 @@
                             <a class="nav-link" href="{{ route('questions.index') }}">{{ __('Questions') }}</a>
                         </li>
                     </ul>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

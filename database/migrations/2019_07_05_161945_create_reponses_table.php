@@ -14,16 +14,18 @@ class CreateReponsesTable extends Migration
     public function up()
     {
         Schema::create('reponses', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('libelle');
             $table->integer('question_id')->unsigned();
-            $table->integer('quiz_id')->unsigned();
+            $table->integer('quize_id')->unsigned();
             $table->boolean('correcte')->default(false);
             $table->timestamps();
 
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
-            $table->foreign('quiz_id')->references('id')->on('quizes')->onDelete('cascade');
+            $table->foreign('quize_id')->references('id')->on('quizes')->onDelete('cascade');
+
         });
+
     }
 
     /**
